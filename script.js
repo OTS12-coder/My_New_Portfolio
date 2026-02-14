@@ -32,7 +32,6 @@ function updateThemeIcon(theme) {
 // Logo Image Handler
 // ===================================
 
-// Check if logo image exists and show it
 const logoImage = document.getElementById('logoImage');
 const brandIcon = document.getElementById('brandIcon');
 const footerLogoImage = document.getElementById('footerLogoImage');
@@ -62,7 +61,7 @@ function checkLogoImage() {
             brandIcon.style.display = 'flex';
         }
     };
-    img.src = 'Assets/Images/logo.png';
+    img.src = 'Me.jpeg';
 }
 
 checkLogoImage();
@@ -386,13 +385,12 @@ function clearError(inputId, errorId) {
     }
 }
 
-// Real-time validation
+// Real-time validation - UPDATED WITHOUT BUDGET
 const validationRules = {
     clientName: { validate: validateName, errorId: 'nameError' },
     clientEmail: { validate: validateEmail, errorId: 'emailError' },
     clientPhone: { validate: validatePhone, errorId: 'phoneError' },
     projectType: { validate: (val) => validateSelect(val, 'project type'), errorId: 'projectTypeError' },
-    budget: { validate: (val) => validateSelect(val, 'budget range'), errorId: 'budgetError' },
     timeline: { validate: (val) => validateSelect(val, 'timeline'), errorId: 'timelineError' },
     projectDescription: { validate: validateDescription, errorId: 'descriptionError' },
     referenceLink: { validate: validateURL, errorId: 'linkError' }
@@ -424,15 +422,19 @@ Object.keys(validationRules).forEach(fieldId => {
 });
 
 // ===================================
-// Google Sheets Integration - FIXED ✅
+// Google Sheets Integration - UPDATED
 // ===================================
 
-// ⚠️ مهم جداً: استبدل هذا الرابط برابط Google Apps Script الخاص بك
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz_QnLZ7m7JNyPGGKQn1IIKIXQRjUC06W5x3GbPQXygcGxxE64Kocpeo5XWeugi-5eDQA/exec';
+// 🚨 IMPORTANT: Replace this with YOUR deployment URL from Google Apps Script
+// The URL should look like: https://script.google.com/macros/s/AKfycbz.../exec
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz-E00mLzlVJjVgyuuxLOQcM_0EO0HOE9WRAjBoBd9RssGUIderfkOOtNmnUhUyX8LWvg/exec';
 
 async function submitToGoogleSheets(formData) {
     try {
-        await fetch(GOOGLE_SCRIPT_URL, {
+        console.log('📤 Submitting to Google Sheets:', GOOGLE_SCRIPT_URL);
+        console.log('📦 Form data:', formData);
+        
+        const response = await fetch(GOOGLE_SCRIPT_URL, {
             method: "POST",
             mode: "no-cors",
             headers: {
@@ -441,7 +443,7 @@ async function submitToGoogleSheets(formData) {
             body: JSON.stringify(formData)
         });
 
-        // طالما وصل هنا يبقى الإرسال تم
+        console.log('✅ Submission completed (no-cors mode)');
         return { status: "success" };
 
     } catch (error) {
@@ -450,9 +452,8 @@ async function submitToGoogleSheets(formData) {
     }
 }
 
-
 // ===================================
-// Form Submission - UPDATED ✅
+// Form Submission - UPDATED WITHOUT BUDGET
 // ===================================
 
 hireForm.addEventListener('submit', async (e) => {
@@ -533,74 +534,26 @@ hireForm.addEventListener('submit', async (e) => {
 });
 
 // ===================================
-// WhatsApp Integration
+// WhatsApp Integration - DIRECT CONTACT (NO VALIDATION)
 // ===================================
 
 const whatsappBtn = document.getElementById('whatsappBtn');
 
 whatsappBtn.addEventListener('click', () => {
-    console.log('💬 WhatsApp button clicked');
+    console.log('💬 WhatsApp button clicked - Opening directly');
     
-    const formData = new FormData(hireForm);
-    const data = {};
-    
-    formData.forEach((value, key) => {
-        data[key] = value;
-    });
-    
-    // Validate required fields
-    let hasErrors = false;
-    
-    Object.keys(validationRules).forEach(fieldId => {
-        if (fieldId === 'referenceLink') return;
-        
-        const field = document.getElementById(fieldId);
-        const rule = validationRules[fieldId];
-        const error = rule.validate(field.value);
-        
-        if (error) {
-            showError(fieldId, rule.errorId, error);
-            hasErrors = true;
-        }
-    });
-    
-    if (hasErrors) {
-        showNotification('Please fill in all required fields correctly', 'error');
-        return;
-    }
-    
-    // Add country code to phone number
-    const countryCode = document.getElementById('countryCode').value;
-    data.clientPhone = countryCode + data.clientPhone;
-    
-    sendWhatsAppMessage(data);
-});
-
-function sendWhatsAppMessage(data) {
+    // Open WhatsApp IMMEDIATELY without any validation
     const phoneNumber = '201229131503';
-    
-    let message = `*New Project Request from Portfolio*\n\n`;
-    message += `👤 *Name:* ${data.clientName}\n`;
-    message += `📧 *Email:* ${data.clientEmail}\n`;
-    message += `📱 *Phone:* ${data.clientPhone}\n\n`;
-    message += `💼 *Project Type:* ${getProjectTypeLabel(data.projectType)}\n`;
-    message += `💰 *Budget:* ${getBudgetLabel(data.budget)}\n`;
-    message += `📅 *Timeline:* ${getTimelineLabel(data.timeline)}\n\n`;
-    message += `📝 *Project Description:*\n${data.projectDescription}\n`;
-    
-    if (data.referenceLink && data.referenceLink.trim() !== '') {
-        message += `\n🔗 *Reference Link:* ${data.referenceLink}`;
-    }
-    
+    const message = `Hello Omar! I'm interested in working with you on a project. Can we discuss?`;
     const encodedMessage = encodeURIComponent(message);
     const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
     
-    console.log('📱 Opening WhatsApp with message');
+    console.log('📱 Opening WhatsApp with URL:', whatsappURL);
     window.open(whatsappURL, '_blank');
-}
+});
 
 // ===================================
-// Helper Functions for Form Labels
+// Helper Functions for Form Labels - UPDATED WITHOUT BUDGET
 // ===================================
 
 function getProjectTypeLabel(value) {
@@ -611,16 +564,6 @@ function getProjectTypeLabel(value) {
         'redesign': 'Website Redesign',
         'maintenance': 'Maintenance & Updates',
         'other': 'Other'
-    };
-    return labels[value] || value;
-}
-
-function getBudgetLabel(value) {
-    const labels = {
-        'small': '$300 - $800',
-        'medium': '$800 - $2000',
-        'large': '$2000 - $5000',
-        'enterprise': '$5000+'
     };
     return labels[value] || value;
 }
@@ -871,27 +814,6 @@ console.log('%c👋 Welcome to my Portfolio!', 'font-size: 24px; font-weight: bo
 console.log('%c💼 Looking for a talented Front-End Developer?', 'font-size: 16px; color: #6B7280;');
 console.log('%c📧 Contact: otaher237@gmail.com', 'font-size: 14px; color: #FF6B6B;');
 console.log('%c🚀 Built with passion and modern web technologies', 'font-size: 12px; color: #4ECDC4;');
-
-// ===================================
-// IMPORTANT NOTE للمطور
-// ===================================
-console.log(`
-%c⚠️ تعليمات مهمة للمطور ⚠️
-`, 'color: #FF6B6B; font-size: 16px; font-weight: bold;');
-
-console.log(`
-%c1. استبدل GOOGLE_SCRIPT_URL برابط Google Apps Script الخاص بك (السطر 344)
-%c2. تأكد من نشر السكريبت كـ "Web app" مع:
-   - Execute as: Me
-   - Who has access: Anyone
-%c3. انسخ رابط الـ deployment واستبدله
-%c4. اختبر الفورم بعد التعديل
-`, 
-'color: #4A90E2; font-size: 12px;',
-'color: #4ECDC4; font-size: 12px;',
-'color: #FF8787; font-size: 12px;',
-'color: #25D366; font-size: 12px;'
-);
 
 // ===================================
 // Page Load Animation
