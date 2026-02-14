@@ -827,3 +827,4 @@ window.addEventListener('load', () => {
         el.style.animationDelay = `${index * 0.1}s`;
     });
 });
+
