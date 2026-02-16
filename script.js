@@ -115,7 +115,7 @@ document.addEventListener('click', (e) => {
 });
 
 // ===================================
-// Smooth Scrolling for Navigation Links
+// Smooth Scrolling for Navigation Liinks
 // ===================================
 
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -543,7 +543,7 @@ whatsappBtn.addEventListener('click', () => {
     console.log('💬 WhatsApp button clicked - Opening directly');
     
     // Open WhatsApp IMMEDIATELY without any validation
-    const phoneNumber = '201229131503';
+    const phoneNumber = '201035151545';
     const message = `Hello Omar! I'm interested in working with you on a project. Can we discuss?`;
     const encodedMessage = encodeURIComponent(message);
     const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
@@ -553,7 +553,7 @@ whatsappBtn.addEventListener('click', () => {
 });
 
 // ===================================
-// Helper Functions for Form Labels - UPDATED WITHOUT BUDGET
+// Helper Functions for Form Labels 
 // ===================================
 
 function getProjectTypeLabel(value) {
@@ -571,9 +571,11 @@ function getProjectTypeLabel(value) {
 function getTimelineLabel(value) {
     const labels = {
         'urgent': '1-2 Weeks (Urgent)',
-        'normal': '1 Month',
-        'flexible': '2-3 Months',
+        'normal': 'Up to 1 Month',
+        'flexible': 'Up to 2-3 Months',
         'longterm': '3+ Months'
+        'UnKnown': 'UnKnown'
+        
     };
     return labels[value] || value;
 }
