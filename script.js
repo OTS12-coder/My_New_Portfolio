@@ -115,7 +115,7 @@ document.addEventListener('click', (e) => {
 });
 
 // ===================================
-// Smooth Scrolling for Navigation Links
+// Smooth Scrolling for Navigation Liinks
 // ===================================
 
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -829,5 +829,6 @@ window.addEventListener('load', () => {
         el.style.animationDelay = `${index * 0.1}s`;
     });
 });
+
 
 
